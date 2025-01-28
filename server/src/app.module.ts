@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
+import { AuthModule } from './modules/admin/auth/auth.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { MongooseModule } from '@nestjs/mongoose';
         dbName: configService.get<string>('DATABASE_NAME'),
       }),
     }),
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
