@@ -13,15 +13,141 @@
 
         <div class="flex flex-col justify-center items-center mt-24">
 <div class="w-full max-w-md p-4 bg-slate-900 border border-slate-700 rounded-lg shadow-sm sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
-    <form class="space-y-6" action="#">
+    <form [formGroup]="myForm" (ngSubmit)="adminLoginIn()" class="space-y-6" action="#">
         <h5 class="text-xl font-medium text-white dark:text-white">Sign in to our platform</h5>
         <div>
             <label for="email" class="block mb-2 text-sm font-medium text-white dark:text-white">Your email</label>
-            <input type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="name@company.com" required />
+            <input type="email" name="email" formControlName="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="name@company.com" required />
+            <div
+            *ngIf="myForm.get('email')?.invalid && myForm.get('email')?.touched"
+            class="text-red-600 font-bold"
+          >
+            <small
+              *ngIf="myForm.get('email')?.errors?.['required']"
+              class="text-red-600 flex items-center space-x-1 mt-2"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                x="0px"
+                y="0px"
+                width="20"
+                height="20"
+                viewBox="0 0 48 48"
+              >
+                <path
+                  fill="#f44336"
+                  d="M44,24c0,11.045-8.955,20-20,20S4,35.045,4,24S12.955,4,24,4S44,12.955,44,24z"
+                ></path>
+                <path
+                  fill="#fff"
+                  d="M29.656,15.516l2.828,2.828l-14.14,14.14l-2.828-2.828L29.656,15.516z"
+                ></path>
+                <path
+                  fill="#fff"
+                  d="M32.484,29.656l-2.828,2.828l-14.14-14.14l2.828-2.828L32.484,29.656z"
+                ></path>
+              </svg>
+              <span>Email is required.</span></small
+            >
+            <small
+              *ngIf="myForm.get('email')?.errors?.['email']"
+              class="text-red-600 flex items-center space-x-1 mt-2"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                x="0px"
+                y="0px"
+                width="20"
+                height="20"
+                viewBox="0 0 48 48"
+              >
+                <path
+                  fill="#f44336"
+                  d="M44,24c0,11.045-8.955,20-20,20S4,35.045,4,24S12.955,4,24,4S44,12.955,44,24z"
+                ></path>
+                <path
+                  fill="#fff"
+                  d="M29.656,15.516l2.828,2.828l-14.14,14.14l-2.828-2.828L29.656,15.516z"
+                ></path>
+                <path
+                  fill="#fff"
+                  d="M32.484,29.656l-2.828,2.828l-14.14-14.14l2.828-2.828L32.484,29.656z"
+                ></path>
+              </svg>
+              <span>Invalid email format</span></small
+            >
+          </div>
+          <div *ngIf="emailInvalid" class="text-red-600 font-bold">
+            <small>{{ emailInvalid }}</small>
+          </div>
         </div>
         <div>
             <label for="password" class="block mb-2 text-sm font-medium text-white dark:text-white">Your password</label>
-            <input type="password" name="password" id="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
+            <input type="password" name="password" formControlName="password" id="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
+            <div
+            *ngIf="
+              myForm.get('password')?.invalid && myForm.get('password')?.touched
+            "
+            class="text-red-600 font-bold"
+          >
+            <small
+              *ngIf="myForm.get('password')?.errors?.['required']"
+              class="text-red-600 flex items-center space-x-1 mt-2"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                x="0px"
+                y="0px"
+                width="20"
+                height="20"
+                viewBox="0 0 48 48"
+              >
+                <path
+                  fill="#f44336"
+                  d="M44,24c0,11.045-8.955,20-20,20S4,35.045,4,24S12.955,4,24,4S44,12.955,44,24z"
+                ></path>
+                <path
+                  fill="#fff"
+                  d="M29.656,15.516l2.828,2.828l-14.14,14.14l-2.828-2.828L29.656,15.516z"
+                ></path>
+                <path
+                  fill="#fff"
+                  d="M32.484,29.656l-2.828,2.828l-14.14-14.14l2.828-2.828L32.484,29.656z"
+                ></path>
+              </svg>
+              <span>Password is required.</span>
+            </small>
+            <small
+              *ngIf="myForm.get('password')?.errors?.['minlength']"
+              class="text-red-600 flex items-center space-x-1 mt-2"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                x="0px"
+                y="0px"
+                width="20"
+                height="20"
+                viewBox="0 0 48 48"
+              >
+                <path
+                  fill="#f44336"
+                  d="M44,24c0,11.045-8.955,20-20,20S4,35.045,4,24S12.955,4,24,4S44,12.955,44,24z"
+                ></path>
+                <path
+                  fill="#fff"
+                  d="M29.656,15.516l2.828,2.828l-14.14,14.14l-2.828-2.828L29.656,15.516z"
+                ></path>
+                <path
+                  fill="#fff"
+                  d="M32.484,29.656l-2.828,2.828l-14.14-14.14l2.828-2.828L32.484,29.656z"
+                ></path>
+              </svg>
+              <span>Minimum length is 6.</span>
+            </small>
+          </div>
+          <div *ngIf="passwordInvalid" class="text-red-600 font-bold">
+            <small>{{ passwordInvalid }}</small>
+          </div>
         </div>
         <div class="flex items-start">
             <a href="#" class="ms-auto text-sm text-blue-700 hover:underline dark:text-blue-500">Lost Password?</a>

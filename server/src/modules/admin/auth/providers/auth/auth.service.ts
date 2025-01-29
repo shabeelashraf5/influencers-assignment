@@ -30,30 +30,30 @@ export class AuthService {
     const { email, password } = loginDto;
 
     try {
-      const loginUser = await this.adminModel.findOne({ email }).exec();
+      const loginAdmin = await this.adminModel.findOne({ email }).exec();
 
-      if (!loginUser) {
+      if (!loginAdmin) {
         throw new HttpException(
           'Invalid email, please register your email',
           HttpStatus.UNAUTHORIZED,
         );
       }
 
-      if (loginUser.password !== password) {
+      if (loginAdmin.password !== password) {
         throw new HttpException('Invalid password', HttpStatus.BAD_REQUEST);
       }
 
       const accessToken = await this.jwtAuthService.generateAccessToken(
         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-        loginUser.id,
-        loginUser.email,
+        loginAdmin.id,
+        loginAdmin.email,
       );
 
       return {
         success: true,
         message: 'User logged in successfully',
         token: accessToken,
-        users: loginUser,
+        admin: loginAdmin,
       };
     } catch (error) {
       if (error instanceof HttpException) {
