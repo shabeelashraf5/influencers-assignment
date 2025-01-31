@@ -8,23 +8,12 @@ import { Observable } from 'rxjs';
 })
 export class OpenaiService {
 
-  // private apiUrl = 'https://api.openai.com/v1/chat/completions';
-  // private apiKey = environment.OPENAPI_ApiKey
+  private apiUrl = 'http://localhost:3000/api';
 
-  // constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient){}
 
-  // getResponse(prompt: string): Observable<any> {
-  //   const headers = new HttpHeaders({
-  //     'Content-Type': 'application/json',
-  //     Authorization: `Bearer ${this.apiKey}`
-  //   });
+  displayUserDetails(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/leaderboard`);
+  }
 
-  //   const body = {
-  //     model: 'gpt-3.5-turbo', // Replace with your model (e.g., gpt-4)
-  //     messages: [{ role: 'user', content: prompt }],
-  //     max_tokens: 100 // Limit the number of tokens in the response
-  //   };
-
-  //   return this.http.post(this.apiUrl, body, { headers });
-  // }
 }

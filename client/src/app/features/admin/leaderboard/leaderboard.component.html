@@ -2,13 +2,16 @@
 
 
 
-<div class="mt-24 flex flex-col p-10">
-
-    
+<div class="mt-16 flex flex-col p-10">
 
     <p class="text-white text-2xl font-bold">Top 10 Influencer Trust Leaderboard</p>
     <p class="text-white mt-3">Reat time rankings of health influencers based on scientific accuracy and transparency.</p>
 
+    <div *ngIf="loading" class="flex justify-center items-center mt-36">
+        <div class="animate-spin border-t-4 border-green-500 w-16 h-16 rounded-full border-solid"></div>
+      </div>
+
+      <div *ngIf="!loading">
     <div class="mt-5">
     <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
 
@@ -20,7 +23,7 @@
                     <path fill="none" stroke="#52cc99" stroke-linecap="round" stroke-linejoin="round" stroke-width="12" d="M155.41251 57.937A52.00595 52.00595 0 1 1 169.52209 160M15.99613 197.39669a88.01736 88.01736 0 0 1 144.00452-.00549M169.52209 160a87.89491 87.89491 0 0 1 72.00032 37.3912" class="colorStroke000000 svgStroke"></path>
                   </svg>
                 <div>
-                    <p class="text-white font-bold text-2xl">1,234</p>
+                    <p class="text-white font-bold text-2xl">{{ statistics.ActiveInfluencers }}</p>
                     <p class="text-white text-sm">Active Influencers</p>
                 </div>
             </div>
@@ -32,7 +35,7 @@
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M 25 2 C 12.309534 2 2 12.309534 2 25 C 2 37.690466 12.309534 48 25 48 C 37.690466 48 48 37.690466 48 25 C 48 12.309534 37.690466 2 25 2 z M 25 4 C 36.609534 4 46 13.390466 46 25 C 46 36.609534 36.609534 46 25 46 C 13.390466 46 4 36.609534 4 25 C 4 13.390466 13.390466 4 25 4 z M 34.988281 14.988281 A 1.0001 1.0001 0 0 0 34.171875 15.439453 L 23.970703 30.476562 L 16.679688 23.710938 A 1.0001 1.0001 0 1 0 15.320312 25.177734 L 24.316406 33.525391 L 35.828125 16.560547 A 1.0001 1.0001 0 0 0 34.988281 14.988281 z"></path>
                     </svg>
                 <div>
-                    <p class="text-white font-bold text-2xl">1,234</p>
+                    <p class="text-white font-bold text-2xl"> {{ statistics.ClaimVerified }}</p>
                     <p class="text-white text-sm">Claim Verified</p>
                 </div>
             </div>
@@ -44,7 +47,7 @@
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4.5V19a1 1 0 0 0 1 1h15M7 14l4-4 4 4 5-5m0 0h-3.207M20 9v3.207"/>
                 </svg>
                 <div>
-                    <p class="text-white font-bold text-2xl">1,234</p>
+                    <p class="text-white font-bold text-2xl">{{ statistics.AverageTrustScore }}</p>
                     <p class="text-white text-sm">Average Trust scores</p>
                 </div>
             </div>
@@ -55,13 +58,8 @@
 
 <div class="flex mt-5 ">
 <button type="button" class="text-white bg-gray-800 hover:bg-green-500 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">All</button>
-<button type="button" class="text-white bg-gray-800 hover:bg-green-500 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Nutrition</button>
-<button type="button" class="text-white bg-gray-800 hover:bg-green-500 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Fitness</button>
-<button type="button" class="text-white bg-gray-800 hover:bg-green-500 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Mental Health</button>
+<button *ngFor="let categories of category" type="button" class="text-white bg-gray-800 hover:bg-green-500 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">{{categories}}</button>
 </div>
-
-
-
 
 
 <div class="relative overflow-x-auto mt-5">
@@ -92,31 +90,19 @@
             </tr>
         </thead>
         <tbody>
-            <tr class="border-b bg-slate-700 dark:border-gray-700 border-slate-700">
-                <th scope="row" class="px-6 py-4 font-medium text-gray-300 whitespace-nowrap ">
-                    Apple MacBook Pro 17"
-                </th>
-                <td class="px-6 py-4 text-gray-400">
-                    Silver
-                </td>
-                <td class="px-6 py-4 text-gray-400">
-                    Laptop
-                </td>
-                <td class="px-6 py-4 text-gray-400">
-                    $2999
-                </td>
-                <td class="px-6 py-4 text-gray-400">
-                    $2999
-                </td>
-                <td class="px-6 py-4 text-gray-400">
-                    $2999
-                </td>
-                <td class="px-6 py-4 text-gray-400">
-                    $2999
-                </td>
+            <tr *ngFor="let user of userDetails" class="border-b even:bg-slate-700 border-slate-700">
+              <td class="px-6 py-4 text-gray-300">{{ user.Rank }}</td>
+              <td class="px-6 py-4 text-gray-400">{{ user.Name }}</td>
+              <td class="px-6 py-4 text-gray-400">{{ user.Category }}</td>
+              <td class="px-6 py-4 text-gray-400">{{ user.TrustScore }}</td>
+              <td class="px-6 py-4 text-gray-400">{{ user.Trend }}</td>
+              <td class="px-6 py-4 text-gray-400">{{ user.Followers }}</td>
+              <td class="px-6 py-4 text-gray-400">{{ user.VerifiedClaims }}</td>
             </tr>
-        </tbody>
+          </tbody>
     </table>
+</div>
+
 </div>
 
 </div>
