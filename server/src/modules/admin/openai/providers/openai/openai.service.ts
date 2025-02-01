@@ -1,9 +1,9 @@
 import { HttpException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import OpenAI from 'openai';
-import { TwitterApi } from 'twitter-api-v2';
 import { Influencer } from '../../schemas/openai.schema';
 import { Model } from 'mongoose';
+import { TwitterApi } from 'twitter-api-v2';
 
 @Injectable()
 export class OpenaiService {
