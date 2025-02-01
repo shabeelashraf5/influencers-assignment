@@ -1,6 +1,17 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
+export class Claim {
+  @Prop({ type: String })
+  title: string;
+
+  @Prop({ type: String })
+  description: string;
+
+  @Prop({ type: Number })
+  publishedAt: number; // Timestamp or the date when the claim was published
+}
+
 @Schema()
 export class Influencer extends Document {
   @Prop({ type: String, required: true })
@@ -35,6 +46,9 @@ export class Influencer extends Document {
 
   @Prop({ type: Date, default: Date.now })
   createdAt: Date;
+
+  @Prop({ type: [Claim], default: [] })
+  claims: Claim[];
 }
 
 export const InfluencerSchema = SchemaFactory.createForClass(Influencer);

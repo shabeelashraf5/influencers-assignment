@@ -1,4 +1,4 @@
-import { HttpException, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import OpenAI from 'openai';
 import { Influencer } from '../../schemas/openai.schema';
@@ -18,8 +18,8 @@ export class OpenaiService {
     });
 
     // this.twitterClient = new TwitterApi({
-    //   appKey: process.env.TWITTER_API_KEY,
-    //   appSecret: process.env.TWITTER_API_SECRET_KEY,
+    //   clientId: process.env.TWITTER_API_KEY,
+    //   clientSecret: process.env.TWITTER_API_SECRET_KEY,
     //   accessToken: process.env.TWITTER_ACCESS_TOKEN,
     //   accessSecret: process.env.TWITTER_ACCESS_TOKEN_SECRET,
     // });
@@ -126,11 +126,11 @@ export class OpenaiService {
       const prompt = `Find details about the influencer ${name}. Format:
       1.Name
       2.Description
-      3.Category (e.g., Nutrition, Fitness, Mental Health, etc.) 
+      3.Category (e.g., Nutrition, Fitness, Mental Health, etc.)
       4.Trust Score (as a percentage, e.g., 85% or 90%)
       5.Trend (Hot, Rising, Stable, etc.)
-      6.Number of Followers 
-      7.Verified Claims (Yes or No) 
+      6.Number of Followers
+      7.Verified Claims (Yes or No)
       8.Active Influencers (Yes or No)
       9.Yearly Revenue (In Numbers)
       10.Products (Number of Products In Numbers)
@@ -180,6 +180,17 @@ export class OpenaiService {
 
         console.log('Final Influencer Object:', influencer);
 
+        const existingInfluencer = await this.influencerModel.findOne({
+          name: influencer.name,
+        });
+
+        if (existingInfluencer) {
+          console.log('Influencer already exists, updating details');
+          throw new HttpException(
+            'Influencer already exists, updating details',
+            HttpStatus.UNAUTHORIZED,
+          );
+        }
         await influencer.save(); // Save to database
 
         return {
