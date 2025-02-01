@@ -26,6 +26,6 @@ export class DashboardService {
   }
 
   displayInfluencers(userId: string): Observable<any>{
-    return this.http.get(`${this.apiUrl}/${userId}/page`); 
+    return this.http.get(`${this.apiUrl}/page/${userId}`); 
   }
 }

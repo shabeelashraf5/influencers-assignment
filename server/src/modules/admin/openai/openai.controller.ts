@@ -29,7 +29,7 @@ export class OpenaiController {
     return response;
   }
 
-  @Get('/:id/page')
+  @Get('/page/:id')
   async getFolderFiles(@Param('id') influId: string) {
     console.log('Folder ID:', influId);
     return await this.openApiService.showInfluncers(influId);

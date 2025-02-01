@@ -4,17 +4,14 @@
 
     <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
 
-    <div class="flex">
-        <img class="rounded-full w-24 h-24 mt-12" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/jese-leos.png" alt="profile picture">
-        <div><p class="text-xl font-bold ml-5">Jese Leos</p>
-            <div class="mt-2 ml-3">
-            <button type="button" class="text-white bg-gray-800 hover:bg-green-500 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-xs md:text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Nueroscience</button>
-            <button type="button" class="text-white bg-gray-800 hover:bg-green-500 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-xs md:text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Nutrition</button>
-            <button type="button" class="text-white bg-gray-800 hover:bg-green-500 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-xs md:text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Fitness</button>
-            <button type="button" class="text-white bg-gray-800 hover:bg-green-500 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-xs md:text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Mental Health</button>
+    <div class="flex py-5">
+        <div><p class="text-4xl ml-5 font-bold">{{influDatas.name}}</p>
+            <div class="flex flex-wrap ml-3 mt-3">
+            <button *ngFor="let cat of influDatas.category" type="button" class="text-white bg-gray-800 hover:bg-green-500 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-xs md:text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">{{cat}}</button>
+ 
         </div>
-        <div class="block max-w-3xl bg-slate-900 rounded-lg shadow-sm dark:bg-gray-800 ml-3 ">
-            <p class="text-justify text-xs md:text-sm">Andrew Huberman is a neuroscientist and tenured professor at Stanford University School of Medicine. He is best known for his research in brain function, neuroplasticity, and behavior, as well as for his popular podcast, The Huberman Lab, where he discusses science-based tools for improving mental and physical health. His work covers topics like sleep, focus, stress management, and performance optimization.</p>
+        <div class="block max-w-3xl bg-slate-900 rounded-lg shadow-sm dark:bg-gray-800 ml-3 mt-3 ">
+            <p class="text-justify text-xs md:text-sm">{{influDatas.description}}</p>
         </div>
         </div>
     </div>
@@ -27,7 +24,7 @@
                 <div class="flex items-center space-x-2">
                     <div>
                         <p class="text-white font-bold text-md">Trust Score</p>
-                        <p class="text-green-500 font-bold text-3xl mt-2">89%</p>
+                        <p class="text-green-500 font-bold text-3xl mt-2">{{influDatas.trustScore}}</p>
                         <p class="text-gray-500 text-xs">Based on 127 verified claims</p>
                     </div>
                 </div>
@@ -37,8 +34,8 @@
                 <div class="flex items-center space-x-2">
                     <div>
                         <p class="text-white font-bold text-md">Yearly Revenue</p>
-                        <p class="text-green-500 font-bold text-3xl mt-2">$ 5.0M</p>
-                        <p class="text-gray-500 text-xs">Estimated earning</p>
+                        <p class="text-green-500 font-bold text-3xl mt-2">{{influDatas.yearlyRevenue}}</p>
+                        <p class="text-gray-500 text-xs">Estimated earnings</p>
                     </div>
                 </div>
             </div>
@@ -47,8 +44,8 @@
                 <div class="flex items-center space-x-2">
                     <div>
                         <p class="text-white font-bold text-md">Products</p>
-                        <p class="text-green-500 font-bold text-3xl mt-2">1</p>
-                        <p class="text-gray-500 text-xs">Recommended product</p>
+                        <p class="text-green-500 font-bold text-3xl mt-2">{{influDatas.products}}</p>
+                        <p class="text-gray-500 text-xs">Recommended products</p>
                     </div>
                 </div>
             </div>
@@ -57,7 +54,7 @@
                 <div class="flex items-center space-x-2">
                     <div>
                         <p class="text-white font-bold text-md">Followers</p>
-                        <p class="text-green-500 font-bold text-3xl mt-2">4.2M+</p>
+                        <p class="text-green-500 font-bold text-3xl mt-2">{{influDatas.numberOfFollowers}}</p>
                         <p class="text-gray-500 text-xs">Total following</p>
                     </div>
                 </div>

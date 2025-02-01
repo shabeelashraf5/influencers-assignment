@@ -18,10 +18,10 @@ export class OpenaiService {
     });
 
     // this.twitterClient = new TwitterApi({
-    //   clientId: process.env.TWITTER_API_KEY,
-    //   clientSecret: process.env.TWITTER_API_SECRET,
-    //   accessToken: process.env.TWITTER_ACCESS_TOKEN,
-    //   accessSecret: process.env.TWITTER_ACCESS_SECRET,
+    //   clientId: process.env.TWITTER_CLIENT_ID, // OAuth 2.0 Client ID
+    //   clientSecret: process.env.TWITTER_CLIENT_SECRET, // OAuth 2.0 Client Secret
+    //   accessToken: process.env.TWITTER_ACCESS_TOKEN, // OAuth 1.0a Access Token
+    //   accessSecret: process.env.TWITTER_ACCESS_SECRET, // OAuth 1.0a Access Token Secret
     // });
   }
 
@@ -129,9 +129,12 @@ export class OpenaiService {
       3.Category (e.g., Nutrition, Fitness, Mental Health, etc.) 
       4.Trust Score (as a percentage, e.g., 85% or 90%)
       5.Trend (Hot, Rising, Stable, etc.)
-      6.Number of Followers (only numbers twitter)
+      6.Number of Followers 
       7.Verified Claims (Yes or No) 
-      8.Active Influencers (Yes or No)`;
+      8.Active Influencers (Yes or No)
+      9.Yearly Revenue (In Numbers)
+      10.Products (Number of Products In Numbers)
+   `;
 
       const response = await this.openai.chat.completions.create({
         model: 'gpt-3.5-turbo',
@@ -157,21 +160,27 @@ export class OpenaiService {
         response.choices[0].message?.content
       ) {
         const influencerData = response.choices[0].message.content.split('\n');
+        console.log('Influencer Data:', influencerData);
         const influencer = new this.influencerModel({
           name: influencerData[0].split(': ')[1], // Extract name
           description: influencerData[1].split(': ')[1], // Extract description
-          category: influencerData[2].split(': ')[1], // Extract category
+          category: influencerData[2]
+            .split(': ')[1]
+            .split(',')
+            .map((c) => c.trim()), // Extract category
           trustScore: influencerData[3].split(': ')[1], // Extract trust score
           trend: influencerData[4].split(': ')[1], // Extract trend
-          numberOfFollowers: parseInt(influencerData[5].split(': ')[1]), // Extract followers as a number
-          verifiedClaims: influencerData[6].split(': ')[1] === 'Yes', // Convert Yes/No to boolean
-          activeInfluencers: influencerData[7].split(': ')[1] === 'Yes', // Convert Yes/No to boolean
+          numberOfFollowers: influencerData[5].split(': ')[1], // Extract followers as a number
+          verifiedClaims: influencerData[6].split(': ')[1].trim(), // Convert Yes/No to boolean
+          activeInfluencers: influencerData[7].split(': ')[1].trim(),
+          yearlyRevenue: influencerData[8].split(': ')[1], // Extract yearly revenue
+          products: influencerData[9].split(': ')[1], // Convert Yes/No to boolean
           createdAt: new Date(),
         });
 
-        await influencer.save(); // Save to database
+        console.log('Final Influencer Object:', influencer);
 
-        console.log('Saved Influencer:', influencer);
+        await influencer.save(); // Save to database
 
         return {
           success: true,
@@ -237,7 +246,7 @@ export class OpenaiService {
       return {
         success: true,
         message: 'List Appeared',
-        dlist: showList,
+        showlist: showList,
       };
     } catch (error) {
       console.error('Error', error);

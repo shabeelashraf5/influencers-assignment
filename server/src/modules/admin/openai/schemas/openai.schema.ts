@@ -9,8 +9,8 @@ export class Influencer extends Document {
   @Prop({ type: String, required: true })
   description: string;
 
-  @Prop({ type: String, required: true })
-  category: string;
+  @Prop({ type: [String], required: true })
+  category: string[];
 
   @Prop({ type: String, required: true })
   trustScore: string;
@@ -21,11 +21,20 @@ export class Influencer extends Document {
   @Prop({ type: String, required: true })
   numberOfFollowers: string;
 
-  @Prop({ type: Boolean, required: true })
-  verifiedClaims: boolean;
+  @Prop({ type: String, required: true })
+  verifiedClaims: string;
 
-  @Prop({ type: Boolean, required: true })
-  activeInfluencers: boolean;
+  @Prop({ type: String, required: true })
+  activeInfluencers: string;
+
+  @Prop({ type: String, required: true })
+  yearlyRevenue: string;
+
+  @Prop({ type: String, required: true })
+  products: string;
+
+  @Prop({ type: Date, default: Date.now })
+  createdAt: Date;
 }
 
 export const InfluencerSchema = SchemaFactory.createForClass(Influencer);

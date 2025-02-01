@@ -10,5 +10,5 @@ export const routes: Routes = [
     {path: 'register', loadComponent: () => import('./features/admin/register/register.component').then(m => m.RegisterComponent), canActivate: [authLogoutGuard]},
     {path: 'dashboard', loadComponent: () => import('./features/admin/dashboard/dashboard.component').then(m => m.DashboardComponent), canActivate: [authLoginGuard]},
     {path: 'leaderboard', loadComponent: () => import('./features/admin/leaderboard/leaderboard.component').then(m => m.LeaderboardComponent)},
-    {path: ':id/page', loadComponent: () => import('./features/admin/influencer-page/influencer-page.component').then(m => m.InfluencerPageComponent)}
+    {path: 'page/:id', loadComponent: () => import('./features/admin/influencer-page/influencer-page.component').then(m => m.InfluencerPageComponent)}
 ];
