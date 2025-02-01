@@ -166,6 +166,7 @@ export class OpenaiService {
           numberOfFollowers: parseInt(influencerData[5].split(': ')[1]), // Extract followers as a number
           verifiedClaims: influencerData[6].split(': ')[1] === 'Yes', // Convert Yes/No to boolean
           activeInfluencers: influencerData[7].split(': ')[1] === 'Yes', // Convert Yes/No to boolean
+          createdAt: new Date(),
         });
 
         await influencer.save(); // Save to database
@@ -193,6 +194,53 @@ export class OpenaiService {
         success: false,
         message: 'An error occurred while fetching influencer details',
       };
+    }
+  }
+
+  async displayInfluncers() {
+    try {
+      const influencersDetails = await this.influencerModel
+        .find({})
+        .sort({ createdAt: -1 })
+        .exec();
+
+      return {
+        success: true,
+        message: 'All Users displayed successfully',
+        users: influencersDetails,
+      };
+    } catch (error) {
+      console.error('Error', error);
+    }
+  }
+
+  async deleteInfluncers(userId: string) {
+    try {
+      const deleteList = await this.influencerModel.findOneAndDelete({
+        _id: userId,
+      });
+
+      return {
+        success: true,
+        message: 'List Deleted',
+        dlist: deleteList,
+      };
+    } catch (error) {
+      console.error('Error', error);
+    }
+  }
+
+  async showInfluncers(userId: string) {
+    try {
+      const showList = await this.influencerModel.findById(userId);
+
+      return {
+        success: true,
+        message: 'List Appeared',
+        dlist: showList,
+      };
+    } catch (error) {
+      console.error('Error', error);
     }
   }
 }
