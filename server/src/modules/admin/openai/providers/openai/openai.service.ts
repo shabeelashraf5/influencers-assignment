@@ -25,38 +25,6 @@ export class OpenaiService {
     // });
   }
 
-  // async getInfluencerDetails() {
-  //   try {
-  //     const response = await this.openai.chat.completions.create({
-  //       model: 'gpt-3.5-turbo',
-  //       messages: [
-  //         {
-  //           role: 'user',
-  //           content: `Provide a list of 10 health influencers, including the following details:
-  //               1. Name
-  //               2. Rank
-  //               3. Category (e.g., Nutrition, Fitness, Mental Health, etc.)
-  //               4. Trust Score (as a percentage, e.g., 85% or 90%)
-  //               5. Trend (Hot, Rising, Stable, etc.)
-  //               6. Number of Followers
-  //               7. Verified Claims (Yes or No)
-
-  //               Please ensure the influencers are well-known and relevant in the health industry, and provide the trust score in percentage format.`,
-  //         },
-  //       ],
-  //     });
-
-  //     return {
-  //       success: true,
-  //       message: 'User logged in successfully',
-  //       influencers: response.choices[0].message.content,
-  //     };
-  //   } catch (error) {
-  //     console.error('Error fetching influencer details:', error);
-  //     throw error;
-  //   }
-  // }
-
   async getInfluencerDetails() {
     try {
       const response = await this.openai.chat.completions.create({
@@ -153,35 +121,6 @@ export class OpenaiService {
     }
   }
 
-  // async fetchInfluencerDetails(name: string) {
-  //   try {
-  //     const prompt = `Find details about the influencer ${name}. Format:
-  //     Name:
-  //     Rank:
-  //     Category:
-  //     Trust Score:
-  //     Trend:
-  //     Number of Followers:
-  //     Verified Claims:
-  //     Active Influencers: `;
-
-  //     const response = await this.openai.completions.create({
-  //       model: 'gpt-3.5-turbo',
-  //       prompt,
-  //     });
-
-  //     console.log('Response:', response);
-
-  //     return {
-  //       success: true,
-  //       message: 'Influencers Created',
-  //       influencers: response.choices[0].text,
-  //     };
-  //   } catch (error) {
-  //     console.error('Error:', error);
-  //   }
-  // }
-
   async fetchInfluencerDetails(name: string) {
     try {
       const prompt = `Find details about the influencer ${name}. Format:
@@ -199,7 +138,8 @@ export class OpenaiService {
         messages: [
           {
             role: 'system',
-            content: 'You are an assistant that helps gather influencer information.',
+            content:
+              'You are an assistant that helps gather influencer information.',
           },
           {
             role: 'user',
@@ -217,17 +157,6 @@ export class OpenaiService {
         response.choices[0].message?.content
       ) {
         const influencerData = response.choices[0].message.content.split('\n');
-
-        // Assuming that each line of the response is in the following format:
-        // 1. Name: Andrew Huberman
-        // 2. Description: Expert in mental health and neuroscience
-        // 3. Category: Mental Health
-        // 4. Trust Score: 90%
-        // 5. Trend: Rising
-        // 6. Number of Followers: 1500000
-        // 7. Verified Claims: Yes
-        // 8. Active Influencers: Yes
-
         const influencer = new this.influencerModel({
           name: influencerData[0].split(': ')[1], // Extract name
           description: influencerData[1].split(': ')[1], // Extract description
