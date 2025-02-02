@@ -17,6 +17,7 @@ export class OpenaiService {
       apiKey: process.env.OPENAPI_API_KEY,
     });
 
+    // this.twitterClient = new TwitterApi(bearerToken as string);
     // this.twitterClient = new TwitterApi({
     //   clientId: process.env.TWITTER_API_KEY,
     //   clientSecret: process.env.TWITTER_API_SECRET_KEY,
