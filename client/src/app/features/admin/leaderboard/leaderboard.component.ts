@@ -16,8 +16,8 @@ import { CommonModule } from '@angular/common';
     statistics: any = {};
     category: any[] = []
     loading: boolean = true;
+    filteredUsers: any[] = [];
     
-
     openaiServce = inject(OpenaiService)
 
 
@@ -33,6 +33,8 @@ import { CommonModule } from '@angular/common';
           this.userDetails = response.influencers;
           this.statistics = response.statistics;
           this.category = [...new Set(response.influencers.map((influencer: any) => influencer.Category))];
+
+          this.filteredUsers = this.userDetails;
           
           // Set loading to false once data is loaded
           this.loading = false;
@@ -43,6 +45,14 @@ import { CommonModule } from '@angular/common';
           this.loading = false;
         }
       });
+    }
+
+    filterByCategory(category: string) {
+      if (category === 'All') {
+        this.filteredUsers = this.userDetails;  // Show all users
+      } else {
+        this.filteredUsers = this.userDetails.filter(user => user.Category === category);
+      }
     }
 
   }

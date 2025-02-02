@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
@@ -312,7 +313,8 @@ export class OpenaiService {
           image: podcast.image, // Podcast Image
           link: podcast.link,
           description: podcast.description_original,
-          highlighted: podcast.description_highlighted, // Podcast Link
+          highlighted: podcast.description_highlighted,
+          publishedAt: new Date(podcast.pub_date_ms).toLocaleString(), // Podcast Link
         }));
 
         // Step 4: Update influencer's podcasts field and save

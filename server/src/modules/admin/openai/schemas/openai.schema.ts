@@ -53,7 +53,7 @@ export class Influencer extends Document {
         title: String,
         description: String,
         audio: String,
-        publishedAt: Number,
+        publishedAt: { type: Date },
         link: String,
         highlighted: String,
       },
@@ -66,7 +66,7 @@ export class Influencer extends Document {
     description: string;
     link: string;
     highlighted: string;
-    publishedAt: number; // Timestamp or date of publication
+    publishedAt: Date;
   }>;
 }
 
