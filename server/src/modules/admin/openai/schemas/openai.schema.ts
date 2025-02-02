@@ -47,8 +47,27 @@ export class Influencer extends Document {
   @Prop({ type: Date, default: Date.now })
   createdAt: Date;
 
-  @Prop({ type: [Claim], default: [] })
-  claims: Claim[];
+  @Prop({
+    type: [
+      {
+        title: String,
+        description: String,
+        audio: String,
+        publishedAt: Number,
+        link: String,
+        highlighted: String,
+      },
+    ],
+    default: [],
+  })
+  podcasts: Array<{
+    title: string;
+    audio: string;
+    description: string;
+    link: string;
+    highlighted: string;
+    publishedAt: number; // Timestamp or date of publication
+  }>;
 }
 
 export const InfluencerSchema = SchemaFactory.createForClass(Influencer);

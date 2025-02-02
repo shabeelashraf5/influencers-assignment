@@ -5,6 +5,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './modules/admin/auth/auth.module';
 import { OpenaiModule } from './modules/admin/openai/openai.module';
+import { TwitterModule } from './modules/admin/twitter/twitter.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { OpenaiModule } from './modules/admin/openai/openai.module';
     }),
     AuthModule,
     OpenaiModule,
+    TwitterModule,
   ],
   controllers: [AppController],
   providers: [AppService],
