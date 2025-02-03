@@ -21,7 +21,7 @@ export class DashboardComponent implements OnInit {
   deleteId: string | null = null;
   selectedUserId: string | null = null; 
   message: string = '';
-
+  loading: boolean = true;
 
   dashboardService = inject(DashboardService)
 
@@ -31,32 +31,35 @@ export class DashboardComponent implements OnInit {
     
   }
 
-
   displayInfluencers() {
-
+    this.loading = true; // Start loading
     this.dashboardService.displayUserDetails().subscribe({
       next: (response) => {
-
-        this.userDetails = response.users
-        console.log(this.userDetails)
-
+        this.userDetails = response.users;
+        console.log(this.userDetails);
+        this.loading = false; // Stop loading once data is loaded
+      },
+      error: (error) => {
+        console.error(error);
+        this.loading = false; // Stop loading if error occurs
       }
-
-    })
+    });
   }
 
   addInfluencers() {
     const listData: Influencers = {
-      
       name: this.name,
     };
+    this.loading = true; // Start loading
     this.dashboardService.addInfluencers(listData).subscribe({
       next: (response) => {
-        this.displayInfluencers()
+        this.displayInfluencers();
         console.log(response);
+        this.loading = false; // Stop loading after action is complete
       },
       error: (err) => {
         console.error(err);
+        this.loading = false; // Stop loading if error occurs
       },
     });
   }

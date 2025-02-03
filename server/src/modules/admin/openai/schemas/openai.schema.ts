@@ -56,6 +56,7 @@ export class Influencer extends Document {
         publishedAt: { type: Date },
         link: String,
         highlighted: String,
+        classification: String,
       },
     ],
     default: [],
@@ -67,6 +68,7 @@ export class Influencer extends Document {
     link: string;
     highlighted: string;
     publishedAt: Date;
+    classification: string;
   }>;
 }
 

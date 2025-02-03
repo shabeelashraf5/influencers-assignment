@@ -237,8 +237,8 @@ export class OpenaiService {
       6.Number of Followers
       7.Verified Claims (Yes or No)
       8.Active Influencers (Yes or No)
-      9.Yearly Revenue (In Numbers)
-      10.Products (Number of Products In Numbers)
+      9.Yearly Revenue (In Numbers, e.g., 2.5M or 50K )
+      10.Products (In Numbers, e.g., 1 or 10 (sentence not allowed))
    `;
 
       const response = await this.openai.chat.completions.create({
@@ -306,6 +306,24 @@ export class OpenaiService {
         );
         console.log('Fetched Podcasts:', podcasts);
 
+        const podcastDescription = podcasts.description_original;
+        console.log('Description_Original:', podcastDescription);
+        const descriptionPrompt = `${podcastDescription} these description please tell me whtehr it is  questionable, verified or debunked. I need only one word answer.`;
+        const descriptionResponse = await this.openai.chat.completions.create({
+          model: 'gpt-3.5-turbo',
+          messages: [
+            {
+              role: 'system',
+              content: 'You are an assistant that classifies descriptions.',
+            },
+            { role: 'user', content: descriptionPrompt },
+          ],
+        });
+
+        const classification =
+          descriptionResponse?.choices?.[0]?.message?.content?.trim() ||
+          'unknown';
+
         // Step 3: Fetch podcasts related to the influencer name
         const cleanedPodcasts = podcasts.results.map((podcast) => ({
           title: podcast.title_original, // Title of the podcast
@@ -314,7 +332,8 @@ export class OpenaiService {
           link: podcast.link,
           description: podcast.description_original,
           highlighted: podcast.description_highlighted,
-          publishedAt: new Date(podcast.pub_date_ms).toLocaleString(), // Podcast Link
+          publishedAt: new Date(podcast.pub_date_ms).toLocaleString(),
+          classification: classification, // Podcast Link
         }));
 
         // Step 4: Update influencer's podcasts field and save
@@ -324,8 +343,6 @@ export class OpenaiService {
         // Step 2: Save influencer data to the database
         await influencer.save();
         console.log('Influencer details saved:', influencer);
-
-        await influencer.save(); // Save the updated influencer with podcasts
 
         return {
           success: true,
